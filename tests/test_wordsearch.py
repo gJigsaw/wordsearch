@@ -56,3 +56,13 @@ def test_finding_words_in_diagonals(testable_wordsearch):
     assert 'MOM' in testable_wordsearch.words_found
     assert 'UB' in testable_wordsearch.words_found
     assert 'DAD' not in testable_wordsearch.words_found
+
+def test_printing_wordsearch(testable_wordsearch, capsys):
+    """Test printing the WordSearch object"""
+
+    testable_wordsearch.words_found = ['DAD', 'BROTHER', 'ZEBRA']
+    print(testable_wordsearch)
+    captured = capsys.readouterr()
+
+    assert captured.out == "\nY U M\nA O B\nM F C\n\nBROTHER DAD ZEBRA\n"
+    assert captured.err == ''
