@@ -12,6 +12,7 @@ class WordSearch:
         self.matrix_size = matrix_size
         self.matrix = self.new_matrix()
         self.words_to_find = words_to_find
+        self.words_found = self.find_words()
 
     def new_matrix(self):
         """Return a matrix of uppercase characters of height and width self.matrix_size"""
@@ -28,3 +29,23 @@ class WordSearch:
             wordsearch_matrix[row_idx] = row
 
         return wordsearch_matrix
+
+    def find_words(self):
+        """Return a list of words found in the matrix"""
+
+        found_words = set()
+        found_words.update(self._find_words_in_row())
+
+        return found_words
+
+    def _find_words_in_row(self):
+        """Return a list of words found in a row of the matrix"""
+
+        words_found = []
+        for _, row in enumerate(self.matrix):
+            search_string = "".join(row)
+            for word in self.words_to_find:
+                if (word in search_string) or (word in search_string[::-1]):
+                    words_found.append(word)
+
+        return words_found
