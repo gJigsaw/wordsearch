@@ -36,11 +36,12 @@ class WordSearch:
         found_words = set()
         found_words.update(self._find_words_in_row())
         found_words.update(self._find_words_in_column())
+        found_words.update(self._find_words_in_diagonal())
 
         return found_words
 
     def _find_words_in_row(self):
-        """Return a list of words found in a row of the matrix"""
+        """Return a set of words found in a row of the matrix"""
 
         words_found = set()
         for _, row in enumerate(self.matrix):
@@ -50,11 +51,34 @@ class WordSearch:
         return words_found
 
     def _find_words_in_column(self):
-        """Return a list of words found in a column of the matrix"""
+        """Return a set of words found in a column of the matrix"""
 
         words_found = set()
         for col in range(self.matrix_size):
             search_string = "".join(self.matrix[:, col])
+            words_found.update(self._find_words_in_string(search_string))
+
+        return words_found
+
+    def _find_words_in_diagonal(self):
+        """Return a set of words found in the diagonals of the matrix"""
+
+        words_found = set()
+        for diag in range(self.matrix_size):
+            search_string = "".join(np.diagonal(self.matrix, diag))
+            words_found.update(self._find_words_in_string(search_string))
+
+        for diag in range(-1, 0-self.matrix_size, -1):
+            search_string = "".join(np.diagonal(self.matrix, diag))
+            words_found.update(self._find_words_in_string(search_string))
+
+        flip_matrix = np.fliplr(self.matrix)
+        for diag in range(self.matrix_size):
+            search_string = "".join(np.diagonal(flip_matrix, diag))
+            words_found.update(self._find_words_in_string(search_string))
+
+        for diag in range(-1, 0-self.matrix_size, -1):
+            search_string = "".join(np.diagonal(flip_matrix, diag))
             words_found.update(self._find_words_in_string(search_string))
 
         return words_found
