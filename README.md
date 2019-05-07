@@ -1,4 +1,4 @@
-# Project Title
+# A Python Wordsearch created in One Hour
 
 A wordsearch program created in 61 minutes (plus documentation time). Create a grid of random characters, then find the words from the provided words.txt file in the rows, columns, and diagonals, forwards and backwards.
 
