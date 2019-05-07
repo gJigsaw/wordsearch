@@ -1,6 +1,7 @@
 """
 Create a random wordsearch grid and identify words included
 """
+import argparse
 import random
 import string
 import numpy as np
@@ -13,6 +14,19 @@ class WordSearch:
         self.matrix = self.new_matrix()
         self.words_to_find = words_to_find
         self.words_found = self.find_words()
+
+    def __repr__(self):
+        matrix_strings = []
+        self_string = "\n"
+
+        for _, row in enumerate(self.matrix):
+            matrix_strings.append(" ".join(row))
+
+        self_string += "\n".join(matrix_strings)
+        self_string += "\n\n"
+        self_string += " ".join(sorted(self.words_found))
+
+        return self_string
 
     def new_matrix(self):
         """Return a matrix of uppercase characters of height and width self.matrix_size"""
@@ -93,3 +107,36 @@ class WordSearch:
                 words_found.append(word)
 
         return words_found
+
+def grid_size_type(size):
+    """Create a new argparse type to validate grid size is an integer greater than 2"""
+
+    size = int(size)
+    if size <= 2:
+        raise argparse.ArgumentTypeError("Minimum grid size is 3 x 3")
+    return size
+
+def create_word_list_from_file(filehandle, grid_size):
+    """Return a list of words to search for"""
+
+    word_list = set(line.strip().upper() for line in filehandle if len(line) <= grid_size)
+
+    return word_list
+
+def main():
+    """Create a wordsearch with provided size and word list file"""
+
+    parser = argparse.ArgumentParser(description='Create a new Wordsearch')
+    parser.add_argument('size', type=grid_size_type,
+                        help="height and width of our wordsearch grid (min: 3)")
+    parser.add_argument('wordfile', type=argparse.FileType('r'),
+                        help="file including words to search for")
+    parser_args = parser.parse_args()
+
+    words_to_find = create_word_list_from_file(parser_args.wordfile, parser_args.size)
+    parser_args.wordfile.close()
+    new_wordsearch = WordSearch(parser_args.size, words_to_find)
+    print(new_wordsearch)
+
+if __name__ == "__main__":
+    main()
