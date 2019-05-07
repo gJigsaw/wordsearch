@@ -10,7 +10,7 @@ from wordsearch.wordsearch import WordSearch
 def testable_wordsearch():
     """Create a test matrix to be used in future tests"""
 
-    word_list = ['YUM', 'BOA', 'YEP', 'YAM', 'CBM', 'GUY']
+    word_list = ['YUM', 'BOA', 'YEP', 'YAM', 'CBM', 'GUY', 'MOM', 'UB', 'DAD']
 
     wordsearch = WordSearch(3, word_list)
 
@@ -43,9 +43,16 @@ def test_finding_words_in_row(testable_wordsearch):
     assert 'BOA' in testable_wordsearch.words_found
     assert 'YEP' not in testable_wordsearch.words_found
 
-def test_finding_words_in_column():
+def test_finding_words_in_column(testable_wordsearch):
     """Test finding words in a column of a given matrix"""
 
     assert 'YAM' in testable_wordsearch.words_found
     assert 'CBM' in testable_wordsearch.words_found
     assert 'GUY' not in testable_wordsearch.words_found
+
+def test_finding_words_in_diagonals(testable_wordsearch):
+    """Test finding words in the diagonals of a given matrix"""
+
+    assert 'MOM' in testable_wordsearch.words_found
+    assert 'UB' in testable_wordsearch.words_found
+    assert 'DAD' not in testable_wordsearch.words_found
