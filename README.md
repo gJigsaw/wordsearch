@@ -6,15 +6,19 @@ A wordsearch program created in 61 minutes (plus documentation time). Create a g
 
 Clone this repository
 
-Create a Virtual Environment
+Create a Virtual Environment using [pipenv](https://docs.pipenv.org/en/latest/install/)
 ```
-python3 -m venv build_env
-source build_env/bin/activate
+pipenv --three
 ```
 
 Install the PyTest requirement
 ```
-pip install -r requirements.txt
+pipenv install --ignore-pipfile
+```
+
+Enter the Virtual Environment
+```
+pipenv shell
 ```
 
 To create your own 15 x 15 matrix and print the words found
@@ -29,5 +33,6 @@ python3 wordsearch/wordsearch.py -h
 
 To execute the tests
 ```
+pipenv install --dev --ignore-pipfile
 python3 -m pytest tests
 ```
