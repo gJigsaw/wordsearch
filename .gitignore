@@ -1,2 +1,14 @@
+
+
+# Python
+*.py[cod]
+
+# PyTest
 .pytest_cache
 __pycache__/
+
+
+# Emacs
+*~
+\#*\#
+.\#*
